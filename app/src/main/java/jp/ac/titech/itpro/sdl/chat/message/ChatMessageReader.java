@@ -40,6 +40,7 @@ public class ChatMessageReader implements Closeable {
         Log.d(TAG, "read");
         int seq = -1;
         long time = -1;
+        int sound = 0;
         String content = null;
         String sender = null;
         reader.beginObject();
@@ -50,6 +51,10 @@ public class ChatMessageReader implements Closeable {
                 break;
             case ChatMessage.FIELD_TIME:
                 time = reader.nextLong();
+                break;
+            case ChatMessage.SOUND:
+                if (reader.nextInt() == 1)
+                    sound = 1;
                 break;
             case ChatMessage.FIELD_CONTENT:
                 if (reader.peek() == JsonToken.NULL) {
@@ -73,6 +78,6 @@ public class ChatMessageReader implements Closeable {
             }
         }
         reader.endObject();
-        return new ChatMessage(seq, time, content, sender);
+        return new ChatMessage(seq, time, content, sender, sound);
     }
 }

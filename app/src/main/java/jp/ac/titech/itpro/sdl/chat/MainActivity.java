@@ -228,11 +228,26 @@ public class MainActivity extends AppCompatActivity {
         }
         messageSeq++;
         long time = System.currentTimeMillis();
-        ChatMessage message = new ChatMessage(messageSeq, time, content, adapter.getName());
+        ChatMessage message = new ChatMessage(messageSeq, time, content, adapter.getName(), 0);
         agent.send(message);
         chatLogAdapter.add(message);
         chatLogAdapter.notifyDataSetChanged();
         logview.smoothScrollToPosition(chatLog.size());
+        input.getEditableText().clear();
+    }
+
+    public void onClickSoundButton(View v) {
+        Log.d(TAG, "onClickSoundButton");
+
+        String content = "foo";
+        if (content.isEmpty()) {
+            Toast.makeText(this, R.string.toast_empty_message, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        messageSeq++;
+        long time = System.currentTimeMillis();
+        ChatMessage message = new ChatMessage(messageSeq, time, content, adapter.getName(), 1);
+        agent.send(message);
         input.getEditableText().clear();
     }
 
@@ -268,6 +283,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showMessage(ChatMessage message) {
+        if (message.sound == 1) {
+            soundPlayer.play_sound();
+            return;
+        }
         chatLogAdapter.add(message);
         chatLogAdapter.notifyDataSetChanged();
         logview.smoothScrollToPosition(chatLogAdapter.getCount());

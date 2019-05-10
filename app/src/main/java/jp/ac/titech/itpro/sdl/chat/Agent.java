@@ -57,6 +57,7 @@ abstract class Agent {
         }
     }
 
+
     void close() {
         if (thread != null) {
             thread.close();

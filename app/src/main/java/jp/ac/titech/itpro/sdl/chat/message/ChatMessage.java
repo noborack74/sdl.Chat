@@ -8,17 +8,20 @@ public class ChatMessage implements Parcelable {
     final static String FIELD_TIME = "time";
     final static String FIELD_CONTENT = "content";
     final static String FIELD_SENDER = "sender";
+    final static String SOUND = "sound";
 
     public final int seq;
     public final long time;
     public final String content;
     public final String sender;
+    public int sound;
 
-    public ChatMessage(int seq, long time, String content, String sender) {
+    public ChatMessage(int seq, long time, String content, String sender, int sound) {
         this.seq = seq;
         this.time = time;
         this.content = content;
         this.sender = sender;
+        this.sound = sound;
     }
 
     private ChatMessage(Parcel in) {
